@@ -1,0 +1,9 @@
+.input-container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.send-button-container{
+    margin-left: 20px;
+}
