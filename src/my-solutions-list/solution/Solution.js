@@ -8,8 +8,8 @@ class Solution extends Component {
     return (
       <div>
         <p>{index}</p>
-        <p>{solution.tags}</p>
-        <p>{solution.description}</p>
+        <p className="tags-info">{solution.tags}</p>
+        <p className="description">{solution.description}</p>
       </div>
     );
   }
