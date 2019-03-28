@@ -45,10 +45,7 @@ class Dashboard extends Component {
             <MySolutionsList solutionsList={this.state.solutions} />
           </div>
         ) : (
-          <AddSolutionForm
-            user={this.state.user}
-            saveSolution={this.handleNewSolutionSave}
-          />
+          <AddSolutionForm saveSolution={this.handleNewSolutionSave} />
         )}
       </div>
     );
@@ -61,6 +58,7 @@ class Dashboard extends Component {
   };
 
   handleNewSolutionSave = newSolution => {
+    newSolution.user = this.state.user;
     axios
       .post(
         'https://elkkfnoggi.execute-api.us-east-1.amazonaws.com/default/mka_todos',
