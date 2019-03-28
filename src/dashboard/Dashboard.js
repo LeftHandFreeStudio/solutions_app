@@ -6,6 +6,7 @@ import MySolutionsList from '../my-solutions-list/MySolutionsList';
 import Fab from '@material-ui/core/Fab';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import AddSolutionForm from '../add-solution-form/AddSolutionForm';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class Dashboard extends Component {
     this.state = {
       solutions: [],
       shouldShowNewSolutionForm: false,
-      user: ''
+      user: '',
+      areSolutionsFetched: true
     };
   }
 
@@ -24,7 +26,7 @@ class Dashboard extends Component {
         <div className="dashboard">{'Das Dashboard'}</div>
         {!this.state.shouldShowNewSolutionForm ? (
           <div>
-            <UsernameInput onClick={this.handleLogin} />
+            <UsernameInput user={this.state.user} onClick={this.handleLogin} />
           </div>
         ) : null}
         <Fab
@@ -37,6 +39,7 @@ class Dashboard extends Component {
           <NavigationIcon />
           Add New Solution
         </Fab>
+        {this.state.areSolutionsFetched ? null : <CircularProgress />}
         {!this.state.shouldShowNewSolutionForm ? (
           <div>
             <MySolutionsList solutionsList={this.state.solutions} />
@@ -53,7 +56,6 @@ class Dashboard extends Component {
 
   handleAddNewSolutionIntent = () => {
     this.setState({
-      solutions: this.state.solutions,
       shouldShowNewSolutionForm: !this.state.shouldShowNewSolutionForm
     });
   };
@@ -70,15 +72,26 @@ class Dashboard extends Component {
   };
 
   handleLogin = value => {
+    value = value === '' ? this.state.user : value;
+    this.setState({
+      user: value,
+      areSolutionsFetched: false
+    });
     axios
       .get(
         'https://elkkfnoggi.execute-api.us-east-1.amazonaws.com/default/mka_todos'
       )
       .then(response => {
+        console.log('resposne');
+        console.log(response);
         const responseData = response.data.filter(solution => {
           return solution.user === value;
         });
-        this.setState({ solutions: responseData, user: value });
+        this.setState({
+          solutions: responseData,
+          user: value,
+          areSolutionsFetched: true
+        });
       });
   };
 }

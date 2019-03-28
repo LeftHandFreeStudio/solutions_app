@@ -49,7 +49,6 @@ class AddSolutionForm extends Component {
       tags: this.tagsInputValue,
       user: this.props.user
     };
-    console.log(newSolution);
     this.props.saveSolution(newSolution);
   };
 }

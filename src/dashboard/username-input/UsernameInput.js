@@ -5,6 +5,11 @@ import Fab from '@material-ui/core/Fab';
 import Icon from '@material-ui/core/Icon';
 
 class UsernameInput extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { currentUsername: props.user };
+  }
   inputValue = '';
   render() {
     return (
@@ -15,7 +20,11 @@ class UsernameInput extends Component {
             label="Username"
             margin="normal"
             variant="outlined"
-            onInput={e => (this.inputValue = e.target.value)}
+            value={this.state.currentUsername}
+            onInput={e => {
+              this.inputValue = e.target.value;
+              this.setState({ currentUsername: this.inputValue });
+            }}
           />
         </form>
         <div className="send-button-container">
