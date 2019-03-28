@@ -2,11 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import UsernameInput from './UsernameInput';
 import { shallow } from 'enzyme';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { TextField } from '@material-ui/core';
-
-Enzyme.configure({ adapter: new Adapter() });
+import '../../setupTests';
 
 describe('UsernameInput', () => {
   let defaultProps;
