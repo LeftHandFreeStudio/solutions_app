@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Solution from './Solution';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -29,7 +29,7 @@ describe('Solution', () => {
   });
 
   it(' shows solution content ', () => {
-    const wrapper = mount(
+    const wrapper = shallow(
       <Solution solution={defaultProps.solution} index={defaultProps.index} />
     );
     const div = wrapper.find('div');
@@ -38,7 +38,7 @@ describe('Solution', () => {
 
   it(' increments received solution index by one ', () => {
     defaultProps.index = 2;
-    const wrapper = mount(
+    const wrapper = shallow(
       <Solution solution={defaultProps.solution} index={defaultProps.index} />
     );
     const indexParagraph = wrapper
@@ -51,7 +51,7 @@ describe('Solution', () => {
   it(' displays correct info about solution ', () => {
     defaultProps.solution.tags = 'angular rocks';
     defaultProps.solution.description = 'test description';
-    const wrapper = mount(
+    const wrapper = shallow(
       <Solution solution={defaultProps.solution} index={defaultProps.index} />
     );
     const tagsParagraph = wrapper.find('.tags-info');
