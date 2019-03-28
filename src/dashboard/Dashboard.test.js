@@ -11,4 +11,10 @@ describe('Dashboard', () => {
     ReactDOM.render(<Dashboard />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
+
+  it("should't show add solution button if not logged in ", () => {
+    const wrapper = shallow(<Dashboard />);
+    const newSolutionButton = wrapper.find('.new-solution-button');
+    expect(newSolutionButton.length).toBe(0);
+  });
 });

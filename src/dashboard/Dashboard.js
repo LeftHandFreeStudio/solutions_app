@@ -21,15 +21,12 @@ class Dashboard extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <div className="dashboard">{'Das Dashboard'}</div>
-        {!this.state.shouldShowNewSolutionForm ? (
-          <div>
-            <UsernameInput user={this.state.user} onClick={this.handleLogin} />
-          </div>
-        ) : null}
+    const newSolutionButton =
+      this.state.user === '' ? (
+        ''
+      ) : (
         <Fab
+          className="new-solution-button"
           variant="extended"
           size="small"
           color="primary"
@@ -39,6 +36,16 @@ class Dashboard extends Component {
           <NavigationIcon />
           Add New Solution
         </Fab>
+      );
+    return (
+      <div>
+        <div className="dashboard">{'Das Dashboard'}</div>
+        {!this.state.shouldShowNewSolutionForm ? (
+          <div>
+            <UsernameInput user={this.state.user} onClick={this.handleLogin} />
+          </div>
+        ) : null}
+        {newSolutionButton}
         {this.state.areSolutionsFetched ? null : <CircularProgress />}
         {!this.state.shouldShowNewSolutionForm ? (
           <div>
@@ -80,6 +87,7 @@ class Dashboard extends Component {
         'https://elkkfnoggi.execute-api.us-east-1.amazonaws.com/default/mka_todos'
       )
       .then(response => {
+        console.log(response);
         const responseData = response.data.filter(solution => {
           return solution.user === value;
         });
