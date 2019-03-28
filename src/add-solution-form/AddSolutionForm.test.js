@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import AddSolutionForm from './AddSolutionForm';
 import { shallow } from 'enzyme';
-import { TextField } from '@material-ui/core';
 import '../setupTests';
+import { wrap } from 'module';
+import Step from './step/Step';
 
 describe('AddSolutionForm', () => {
   let defaultProps;
@@ -23,10 +24,44 @@ describe('AddSolutionForm', () => {
     expect(tilteTextField.length).toBe(1);
   });
 
+  it('should have text field for tags', () => {
+    const wrapper = shallow(<AddSolutionForm />);
+    const tagsTextField = wrapper.find('.tags');
+    expect(tagsTextField.length).toBe(1);
+  });
+
   it('should have button for adding new step', () => {
     const wrapper = shallow(<AddSolutionForm />);
     const newStepButton = wrapper.find('.new-step-button');
     expect(newStepButton.length).toBe(1);
+  });
+
+  it('should new step button should push step to steps in state', () => {
+    const wrapper = shallow(<AddSolutionForm />);
+    const newStepButton = wrapper.find('.new-step-button');
+    const cachedStepSize = wrapper.state().steps.length;
+    newStepButton.first().simulate('click');
+
+    expect(wrapper.state().steps.length).toBe(cachedStepSize + 1);
+  });
+
+  it('shouldnt allow more than 10 steps', () => {
+    const wrapper = shallow(<AddSolutionForm />);
+    wrapper.setState({
+      steps: ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x']
+    });
+    const newStepButton = wrapper.find('.new-step-button');
+    const cachedStepSize = wrapper.state().steps.length;
+    newStepButton.first().simulate('click');
+
+    expect(wrapper.state().steps.length).toBe(cachedStepSize);
+  });
+
+  it('should render steps according to number of steps', () => {
+    const wrapper = shallow(<AddSolutionForm />);
+    wrapper.setState({ steps: ['x', 'x', 'x'] });
+    const steps = wrapper.find(Step);
+    expect(steps.length).toBe(3);
   });
 
   it('should save value input into title in variable titleInputValue', () => {
@@ -36,7 +71,7 @@ describe('AddSolutionForm', () => {
     expect(wrapper.state().titleInputValue).toBe('test');
   });
 
-  it('renders without crashing even without props', () => {
+  it('should send form data to callback function', () => {
     const saveSolutionStub = jest.fn();
     const wrapper = shallow(
       <AddSolutionForm saveSolution={saveSolutionStub} />
@@ -45,7 +80,7 @@ describe('AddSolutionForm', () => {
     saveButton.first().simulate('click');
     expect(saveSolutionStub).toHaveBeenCalledWith({
       title: '',
-      description: '',
+      steps: [],
       tags: ''
     });
   });
