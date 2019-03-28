@@ -12,6 +12,9 @@ class UsernameInput extends Component {
   }
   inputValue = '';
   render() {
+    const userName = this.state.currentUsername
+      ? this.state.currentUsername
+      : '';
     return (
       <div className="input-container">
         <form>
@@ -20,7 +23,7 @@ class UsernameInput extends Component {
             label="Username"
             margin="normal"
             variant="outlined"
-            value={this.state.currentUsername}
+            value={userName}
             onInput={e => {
               this.inputValue = e.target.value;
               this.setState({ currentUsername: this.inputValue });
@@ -28,7 +31,12 @@ class UsernameInput extends Component {
           />
         </form>
         <div className="send-button-container">
-          <Fab color="primary" aria-label="Add" onClick={this.handleSendClick}>
+          <Fab
+            className="send-button"
+            color="primary"
+            aria-label="Add"
+            onClick={this.handleSendClick}
+          >
             <Icon>send</Icon>
           </Fab>
         </div>
@@ -37,6 +45,8 @@ class UsernameInput extends Component {
   }
 
   handleSendClick = () => {
+    this.inputValue =
+      this.inputValue === '' ? this.state.currentUsername : this.inputValue;
     this.props.onClick(this.inputValue);
   };
 }

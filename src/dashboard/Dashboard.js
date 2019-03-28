@@ -82,8 +82,6 @@ class Dashboard extends Component {
         'https://elkkfnoggi.execute-api.us-east-1.amazonaws.com/default/mka_todos'
       )
       .then(response => {
-        console.log('resposne');
-        console.log(response);
         const responseData = response.data.filter(solution => {
           return solution.user === value;
         });
