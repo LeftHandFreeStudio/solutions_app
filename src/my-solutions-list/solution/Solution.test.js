@@ -2,10 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Solution from './Solution';
 import { shallow } from 'enzyme';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-
-Enzyme.configure({ adapter: new Adapter() });
+import '../../setupTests';
 
 describe('Solution', () => {
   let testSolution = {
