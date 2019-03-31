@@ -29,6 +29,7 @@ class AddSolutionForm extends Component {
           label="Description"
           margin="normal"
           variant="outlined"
+          rows="10"
           multiline
           onChange={e =>
             this.setState({ descriptionInputValue: e.target.value })
@@ -49,6 +50,9 @@ class AddSolutionForm extends Component {
         >
           Send
           <Icon>send</Icon>
+        </Button>
+        <Button className="back-button" variant="contained" color="primary">
+          <Icon>arrow_back_ios</Icon>
         </Button>
       </div>
     );
