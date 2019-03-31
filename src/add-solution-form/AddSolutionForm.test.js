@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import AddSolutionForm from './AddSolutionForm';
 import { shallow } from 'enzyme';
 import '../setupTests';
-import { wrap } from 'module';
-import Step from './step/Step';
 
 describe('AddSolutionForm', () => {
   let defaultProps;
@@ -30,38 +28,10 @@ describe('AddSolutionForm', () => {
     expect(tagsTextField.length).toBe(1);
   });
 
-  it('should have button for adding new step', () => {
+  it('should have text field for description', () => {
     const wrapper = shallow(<AddSolutionForm />);
-    const newStepButton = wrapper.find('.new-step-button');
-    expect(newStepButton.length).toBe(1);
-  });
-
-  it('should new step button should push step to steps in state', () => {
-    const wrapper = shallow(<AddSolutionForm />);
-    const newStepButton = wrapper.find('.new-step-button');
-    const cachedStepSize = wrapper.state().steps.length;
-    newStepButton.first().simulate('click');
-
-    expect(wrapper.state().steps.length).toBe(cachedStepSize + 1);
-  });
-
-  it('shouldnt allow more than 10 steps', () => {
-    const wrapper = shallow(<AddSolutionForm />);
-    wrapper.setState({
-      steps: ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x']
-    });
-    const newStepButton = wrapper.find('.new-step-button');
-    const cachedStepSize = wrapper.state().steps.length;
-    newStepButton.first().simulate('click');
-
-    expect(wrapper.state().steps.length).toBe(cachedStepSize);
-  });
-
-  it('should render steps according to number of steps', () => {
-    const wrapper = shallow(<AddSolutionForm />);
-    wrapper.setState({ steps: ['x', 'x', 'x'] });
-    const steps = wrapper.find(Step);
-    expect(steps.length).toBe(3);
+    const descriptionTextField = wrapper.find('.description');
+    expect(descriptionTextField.length).toBe(1);
   });
 
   it('should save value input into title in variable titleInputValue', () => {
@@ -80,7 +50,7 @@ describe('AddSolutionForm', () => {
     saveButton.first().simulate('click');
     expect(saveSolutionStub).toHaveBeenCalledWith({
       title: '',
-      steps: [],
+      description: '',
       tags: ''
     });
   });
