@@ -3,6 +3,7 @@ import './AddSolutionForm.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
+import { Link } from 'react-router-dom';
 
 class AddSolutionForm extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class AddSolutionForm extends Component {
           label="Title"
           margin="normal"
           variant="outlined"
-          onChange={e => this.setState({ titleInputValue: e.target.value })}
+          onChange={this.handleTitleChange}
         />
         <TextField
           className="description"
@@ -51,12 +52,18 @@ class AddSolutionForm extends Component {
           Send
           <Icon>send</Icon>
         </Button>
-        <Button className="back-button" variant="contained" color="primary">
-          <Icon>arrow_back_ios</Icon>
-        </Button>
+        <Link to="/">
+          <Button className="back-button" variant="contained" color="primary">
+            <Icon>arrow_back_ios</Icon>
+          </Button>
+        </Link>
       </div>
     );
   }
+
+  handleTitleChange = e => {
+    this.setState({ titleInputValue: e.target.value });
+  };
 
   handleSaveClick = () => {
     const newSolution = {

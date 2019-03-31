@@ -7,6 +7,7 @@ import Fab from '@material-ui/core/Fab';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import AddSolutionForm from '../add-solution-form/AddSolutionForm';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Link } from 'react-router-dom';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -25,17 +26,19 @@ class Dashboard extends Component {
       this.state.user === '' ? (
         ''
       ) : (
-        <Fab
-          className="new-solution-button"
-          variant="extended"
-          size="small"
-          color="primary"
-          aria-label="Add"
-          onClick={this.handleAddNewSolutionIntent}
-        >
-          <NavigationIcon />
-          Add New Solution
-        </Fab>
+        <Link to="/add">
+          <Fab
+            className="new-solution-button"
+            variant="extended"
+            size="small"
+            color="primary"
+            aria-label="Add"
+            onClick={this.handleAddNewSolutionIntent}
+          >
+            <NavigationIcon />
+            Add New Solution
+          </Fab>
+        </Link>
       );
     return (
       <div>
