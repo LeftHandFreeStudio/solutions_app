@@ -51,7 +51,9 @@ describe('AddSolutionForm', () => {
     const comp = wrapper.find('AddSolutionForm');
     const tilteTextField = comp.find('TextField.title');
 
-    tilteTextField.props().onChange({ target: { value: 'test' } });
+    const input = tilteTextField.find('input');
+    input.first().simulate('change', { target: { value: 'test' } });
+
     expect(comp.first().state().titleInputValue).toBe('test');
   });
 
