@@ -33,6 +33,11 @@ describe('AddSolutionForm', () => {
     const descriptionTextField = wrapper.find('.description');
     expect(descriptionTextField.length).toBe(1);
   });
+  it('description field shoul be multiline', () => {
+    const wrapper = shallow(<AddSolutionForm />);
+    const descriptionTextField = wrapper.find('.description');
+    expect(descriptionTextField.first().props().multiline).toBe(true);
+  });
 
   it('should save value input into title in variable titleInputValue', () => {
     const wrapper = shallow(<AddSolutionForm />);

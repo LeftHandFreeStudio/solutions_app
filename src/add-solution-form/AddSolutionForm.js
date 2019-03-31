@@ -29,6 +29,7 @@ class AddSolutionForm extends Component {
           label="Description"
           margin="normal"
           variant="outlined"
+          multiline
           onChange={e =>
             this.setState({ descriptionInputValue: e.target.value })
           }
