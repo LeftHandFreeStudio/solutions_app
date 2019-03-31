@@ -3,8 +3,6 @@ import './AddSolutionForm.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
-import Step from './step/Step';
-import cloneDeep from 'lodash/cloneDeep';
 
 class AddSolutionForm extends Component {
   constructor(props) {
@@ -12,21 +10,14 @@ class AddSolutionForm extends Component {
 
     this.state = {
       titleInputValue: '',
-      tagsInputValue: '',
-      steps: []
+      descriptionInputValue: '',
+      tagsInputValue: ''
     };
   }
   render() {
     const steps = this.state.steps;
     return (
       <div>
-        <Button
-          className="new-step-button"
-          color="primary"
-          onClick={this.handleNewStepClick}
-        >
-          New Step
-        </Button>
         <TextField
           className="title"
           label="Title"
@@ -34,9 +25,15 @@ class AddSolutionForm extends Component {
           variant="outlined"
           onChange={e => this.setState({ titleInputValue: e.target.value })}
         />
-        {steps.map((step, index) => {
-          return <Step key={index} index={index + 1} ref={this.assignRef} />;
-        })}
+        <TextField
+          className="description"
+          label="Description"
+          margin="normal"
+          variant="outlined"
+          onChange={e =>
+            this.setState({ descriptionInputValue: e.target.value })
+          }
+        />
         <TextField
           className="tags"
           label="Tags"
@@ -57,27 +54,10 @@ class AddSolutionForm extends Component {
     );
   }
 
-  assignRef = ref => {
-    if (ref === null) {
-      return;
-    }
-    const newSteps = cloneDeep(this.state.steps);
-    newSteps[ref.props.index - 1] = ref;
-    this.setState({ steps: newSteps });
-  };
-
-  handleNewStepClick = () => {
-    if (this.state.steps.length >= 10) {
-      return;
-    }
-    this.setState({ steps: this.state.steps.concat(['x']) });
-  };
-
   handleSaveClick = () => {
-    const stepsToSend = this.state.steps.map(step => step.state.currentValue);
     const newSolution = {
       title: this.state.titleInputValue,
-      steps: stepsToSend,
+      description: this.state.descriptionInputValue,
       tags: this.state.tagsInputValue
     };
     this.props.saveSolution(newSolution);
