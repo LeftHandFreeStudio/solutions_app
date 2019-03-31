@@ -46,6 +46,12 @@ describe('AddSolutionForm', () => {
     expect(wrapper.state().titleInputValue).toBe('test');
   });
 
+  it('should have back button', () => {
+    const wrapper = shallow(<AddSolutionForm />);
+    const backButton = wrapper.find('.back-button');
+    expect(backButton.length).toBe(1);
+  });
+
   it('should send form data to callback function', () => {
     const saveSolutionStub = jest.fn();
     const wrapper = shallow(

@@ -1,3 +1,44 @@
 .wrapper {
     display: grid;
+    width: 90%;
+    height: 80vh;
+    justify-items: center;
+    margin: 0 auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr auto auto;
+}
+
+.title{
+    width: 100%;
+    grid-row: 1;
+    grid-column: 1/6;
+}
+
+.description{
+    width: 100%;
+    grid-row: 2;
+    grid-column: 1/6;
+    align-self: stretch;
+}
+
+.tags{
+    width: 100%;
+    grid-row: 3;
+    grid-column: 1/6;
+}
+
+.back-button{
+    padding: 16px 0px;
+    max-height: 80px;
+    grid-row: 4;
+    grid-column: 2/3;
+    place-self: center;
+}
+
+.save-button{
+    padding: 16px 0px;
+    max-height: 80px;
+    grid-row: 4;
+    grid-column: 4/5;
+    place-self: center;
 }
