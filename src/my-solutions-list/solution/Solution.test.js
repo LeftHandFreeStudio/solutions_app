@@ -7,8 +7,7 @@ import '../../setupTests';
 describe('Solution', () => {
   let testSolution = {
     tags: 'java, angular',
-    description: 'test description',
-    steps: ['test', 'test']
+    description: 'test description'
   };
   let defaultProps;
   beforeEach(() => {
@@ -26,12 +25,12 @@ describe('Solution', () => {
     ReactDOM.unmountComponentAtNode(div);
   });
 
-  it(' should show solution steps ', () => {
+  it(' should show solution description ', () => {
     const wrapper = shallow(
       <Solution solution={defaultProps.solution} index={defaultProps.index} />
     );
-    const div = wrapper.find('.step');
-    expect(div.length).toBe(2);
+    const description = wrapper.find('.description');
+    expect(description.length).toBe(1);
   });
 
   it(' increments received solution index by one ', () => {
