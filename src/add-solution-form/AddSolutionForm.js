@@ -15,9 +15,8 @@ class AddSolutionForm extends Component {
     };
   }
   render() {
-    const steps = this.state.steps;
     return (
-      <div>
+      <div className="wrapper">
         <TextField
           className="title"
           label="Title"
