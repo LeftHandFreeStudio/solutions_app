@@ -1,4 +1,4 @@
-export const ADD_SOLUTION = 'add_solution';
+import { ADD_SOLUTION } from './actionTypes';
 
 export const addUserSolution = solution => {
   return {
