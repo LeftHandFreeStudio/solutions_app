@@ -36,7 +36,7 @@ export const userSolutions = (state = defaultUserSolutions, action) => {
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
-        items: [...state.items, action.fetchedSolutions]
+        items: [...state.items, ...action.solutions]
       });
     case ADD_SOLUTION:
       return Object.assign({}, state, {

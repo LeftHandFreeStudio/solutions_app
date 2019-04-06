@@ -5,9 +5,11 @@ import axios from 'axios';
 import MySolutionsList from '../my-solutions-list/MySolutionsList';
 import Fab from '@material-ui/core/Fab';
 import NavigationIcon from '@material-ui/icons/Navigation';
-import AddSolutionForm from '../add-solution-form/AddSolutionForm';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { store } from '../../store';
+import { fetchSolutions } from '../../modules/solutionsActions';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -15,7 +17,6 @@ class Dashboard extends Component {
 
     this.state = {
       solutions: [],
-      shouldShowNewSolutionForm: false,
       user: '',
       areSolutionsFetched: true
     };
@@ -33,7 +34,6 @@ class Dashboard extends Component {
             size="small"
             color="primary"
             aria-label="Add"
-            onClick={this.handleAddNewSolutionIntent}
           >
             <NavigationIcon />
             Add New Solution
@@ -49,23 +49,11 @@ class Dashboard extends Component {
           </div>
         ) : null}
         {newSolutionButton}
-        {this.state.areSolutionsFetched ? null : <CircularProgress />}
-        {!this.state.shouldShowNewSolutionForm ? (
-          <div>
-            <MySolutionsList solutionsList={this.state.solutions} />
-          </div>
-        ) : (
-          <AddSolutionForm saveSolution={this.handleNewSolutionSave} />
-        )}
+        {this.props.areSolutionsFetched && <CircularProgress />}
+        <MySolutionsList solutionsList={this.props.solutions} />
       </div>
     );
   }
-
-  handleAddNewSolutionIntent = () => {
-    this.setState({
-      shouldShowNewSolutionForm: !this.state.shouldShowNewSolutionForm
-    });
-  };
 
   handleNewSolutionSave = newSolution => {
     newSolution.user = this.state.user;
@@ -79,28 +67,21 @@ class Dashboard extends Component {
       });
   };
 
-  handleLogin = value => {
-    value = value === '' ? this.state.user : value;
+  handleLogin = username => {
+    username = username === '' ? this.state.user : username;
     this.setState({
-      user: value,
+      user: username,
       areSolutionsFetched: false
     });
-    axios
-      .get(
-        'https://elkkfnoggi.execute-api.us-east-1.amazonaws.com/default/mka_todos'
-      )
-      .then(response => {
-        console.log(response);
-        const responseData = response.data.filter(solution => {
-          return solution.user === value;
-        });
-        this.setState({
-          solutions: responseData,
-          user: value,
-          areSolutionsFetched: true
-        });
-      });
+    store.dispatch(fetchSolutions(username));
   };
 }
 
-export default Dashboard;
+const mapStateToProps = state => {
+  return {
+    solutions: state.userSolutions.items,
+    areSolutionsFetched: state.userSolutions.isFetching
+  };
+};
+
+export default connect(mapStateToProps)(Dashboard);
