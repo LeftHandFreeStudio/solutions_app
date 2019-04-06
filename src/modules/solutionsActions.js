@@ -5,6 +5,7 @@ import {
   SAVE_SOLUTION
 } from './actionTypes';
 import axios from 'axios';
+import { SOLUTIONS_API } from '../config';
 
 export const addUserSolution = solution => {
   return {
@@ -36,29 +37,20 @@ export function receiveSolutions(fetchedSolutions) {
 export function postSolution(solutionToAdd) {
   return function(dispatch) {
     dispatch(requestSolutionSave(solutionToAdd));
-    return axios
-      .post(
-        'https://elkkfnoggi.execute-api.us-east-1.amazonaws.com/default/mka_todos',
-        solutionToAdd
-      )
-      .then(response => {
-        console.log('trying to create solution with status ' + response.status);
-      });
+    return axios.post(SOLUTIONS_API, solutionToAdd).then(response => {
+      console.log('trying to create solution with status ' + response.status);
+    });
   };
 }
 
 export function fetchSolutions(targetUsername) {
   return function(dispatch) {
     dispatch(requestSolutions());
-    return axios
-      .get(
-        'https://elkkfnoggi.execute-api.us-east-1.amazonaws.com/default/mka_todos'
-      )
-      .then(response => {
-        const userSolutions = response.data.filter(solution => {
-          return solution.user === targetUsername;
-        });
-        dispatch(receiveSolutions(userSolutions));
+    return axios.get(SOLUTIONS_API).then(response => {
+      const userSolutions = response.data.filter(solution => {
+        return solution.user === targetUsername;
       });
+      dispatch(receiveSolutions(userSolutions));
+    });
   };
 }
