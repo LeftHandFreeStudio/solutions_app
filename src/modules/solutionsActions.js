@@ -36,8 +36,8 @@ export function receiveSolutions(fetchedSolutions) {
 
 export function postSolution(solutionToAdd) {
   return function(dispatch) {
-    dispatch(requestSolutionSave(solutionToAdd));
     return axios.post(SOLUTIONS_API, solutionToAdd).then(response => {
+      dispatch(requestSolutionSave(solutionToAdd));
       console.log('trying to create solution with status ' + response.status);
     });
   };

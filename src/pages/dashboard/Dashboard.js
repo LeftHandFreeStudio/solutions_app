@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchSolutions } from '../../modules/solutionsActions';
-import { setUserData } from '../../modules/userActions';
+import { postUser } from '../../modules/userActions';
 
 export class Dashboard extends Component {
   render() {
@@ -48,8 +48,9 @@ export class Dashboard extends Component {
   }
 
   handleLogin = username => {
-    this.props.dispatch(setUserData({ username: username }));
-    this.props.dispatch(fetchSolutions(username));
+    this.props.dispatch(postUser({ username: username })).then(() => {
+      this.props.dispatch(fetchSolutions(username));
+    });
   };
 }
 
