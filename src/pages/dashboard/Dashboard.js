@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Dashboard.css';
 import UsernameInput from './username-input/UsernameInput';
-import axios from 'axios';
 import MySolutionsList from '../my-solutions-list/MySolutionsList';
 import Fab from '@material-ui/core/Fab';
 import NavigationIcon from '@material-ui/icons/Navigation';
@@ -10,21 +9,12 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { store } from '../../store';
 import { fetchSolutions } from '../../modules/solutionsActions';
+import { setUserData } from '../../modules/userActions';
 
 class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      solutions: [],
-      user: '',
-      areSolutionsFetched: true
-    };
-  }
-
   render() {
     const newSolutionButton =
-      this.state.user === '' ? (
+      this.props.user.username === '' ? (
         ''
       ) : (
         <Link to="/add">
@@ -43,11 +33,14 @@ class Dashboard extends Component {
     return (
       <div>
         <div className="dashboard">{'Das Dashboard'}</div>
-        {!this.state.shouldShowNewSolutionForm ? (
+        {this.props.user.username === '' && (
           <div>
-            <UsernameInput user={this.state.user} onClick={this.handleLogin} />
+            <UsernameInput
+              user={this.props.user.username}
+              onClick={this.handleLogin}
+            />
           </div>
-        ) : null}
+        )}
         {newSolutionButton}
         {this.props.areSolutionsFetched && <CircularProgress />}
         <MySolutionsList solutionsList={this.props.solutions} />
@@ -55,24 +48,8 @@ class Dashboard extends Component {
     );
   }
 
-  handleNewSolutionSave = newSolution => {
-    newSolution.user = this.state.user;
-    axios
-      .post(
-        'https://elkkfnoggi.execute-api.us-east-1.amazonaws.com/default/mka_todos',
-        newSolution
-      )
-      .then(response => {
-        console.log('trying to create solution with status ' + response.status);
-      });
-  };
-
   handleLogin = username => {
-    username = username === '' ? this.state.user : username;
-    this.setState({
-      user: username,
-      areSolutionsFetched: false
-    });
+    store.dispatch(setUserData({ username: username }));
     store.dispatch(fetchSolutions(username));
   };
 }
@@ -80,7 +57,8 @@ class Dashboard extends Component {
 const mapStateToProps = state => {
   return {
     solutions: state.userSolutions.items,
-    areSolutionsFetched: state.userSolutions.isFetching
+    areSolutionsFetched: state.userSolutions.isFetching,
+    user: state.user
   };
 };
 
