@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import UsernameInput from './UsernameInput';
 import { shallow } from 'enzyme';
 import { TextField } from '@material-ui/core';
-import '../../setupTests';
+import '../../../setupTests';
 
 describe('UsernameInput', () => {
   let defaultProps;

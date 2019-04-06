@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import MySolutionsList from './MySolutionsList';
 import { shallow } from 'enzyme';
 import Solution from './solution/Solution';
-import '../setupTests';
+import '../../setupTests';
 
 describe('MySolutionsList', () => {
   const solution1 = {

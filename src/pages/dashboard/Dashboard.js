@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { fetchSolutions } from '../../modules/solutionsActions';
 import { setUserData } from '../../modules/userActions';
 
-class Dashboard extends Component {
+export class Dashboard extends Component {
   render() {
     const newSolutionButton =
       this.props.user.username === '' ? (
