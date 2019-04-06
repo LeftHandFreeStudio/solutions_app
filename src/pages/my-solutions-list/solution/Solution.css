@@ -1,7 +1,5 @@
 .solution-wrapper{
     display: grid;
-    width: 100%;
-    max-width: 100%;
     grid-template-columns: 2% 1fr 2%;
     grid-template-rows: 5% 40px 1fr 20%;
     background-color: #fff;
