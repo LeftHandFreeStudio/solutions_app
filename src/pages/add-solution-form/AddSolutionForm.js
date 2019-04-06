@@ -4,6 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import { Link } from 'react-router-dom';
+import { store } from '../../store';
+import { postSolution } from '../../modules/solutionsActions';
+import { connect } from 'react-redux';
 
 class AddSolutionForm extends Component {
   constructor(props) {
@@ -71,8 +74,15 @@ class AddSolutionForm extends Component {
       description: this.state.descriptionInputValue,
       tags: this.state.tagsInputValue
     };
-    this.props.saveSolution(newSolution);
+    newSolution.user = this.props.user.username;
+    store.dispatch(postSolution(newSolution));
   };
 }
 
-export default AddSolutionForm;
+const mapStateToProps = function(state) {
+  return {
+    user: state.user
+  };
+};
+
+export default connect(mapStateToProps)(AddSolutionForm);

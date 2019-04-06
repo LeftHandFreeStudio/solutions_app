@@ -1,7 +1,8 @@
 import {
   FETCH_SOLUTIONS,
   ADD_SOLUTION,
-  RECEIVE_SOLUTIONS
+  RECEIVE_SOLUTIONS,
+  SAVE_SOLUTION
 } from './actionTypes';
 import axios from 'axios';
 
@@ -18,10 +19,31 @@ export function requestSolutions() {
   };
 }
 
+export function requestSolutionSave(solutionToSave) {
+  return {
+    type: SAVE_SOLUTION,
+    newSolution: solutionToSave
+  };
+}
+
 export function receiveSolutions(fetchedSolutions) {
   return {
     type: RECEIVE_SOLUTIONS,
     solutions: fetchedSolutions
+  };
+}
+
+export function postSolution(solutionToAdd) {
+  return function(dispatch) {
+    dispatch(requestSolutionSave(solutionToAdd));
+    return axios
+      .post(
+        'https://elkkfnoggi.execute-api.us-east-1.amazonaws.com/default/mka_todos',
+        solutionToAdd
+      )
+      .then(response => {
+        console.log('trying to create solution with status ' + response.status);
+      });
   };
 }
 

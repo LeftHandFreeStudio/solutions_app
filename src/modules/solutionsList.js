@@ -4,20 +4,6 @@ import {
   RECEIVE_SOLUTIONS
 } from './actionTypes';
 
-/*
-STATE SHAPE
-
-{
-  userSolutions:{
-      isFetching: false,
-      didInvalidate: false,
-      lastUpdated: 1439478405547,
-      items: []
-  }
-}
-
-*/
-
 const defaultUserSolutions = {
   isFetching: false,
   didInvalidate: false,
