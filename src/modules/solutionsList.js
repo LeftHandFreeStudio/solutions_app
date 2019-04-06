@@ -1,7 +1,8 @@
 import {
   FETCH_SOLUTIONS,
   ADD_SOLUTION,
-  RECEIVE_SOLUTIONS
+  RECEIVE_SOLUTIONS,
+  SAVE_SOLUTION
 } from './actionTypes';
 
 const defaultUserSolutions = {
@@ -25,6 +26,10 @@ export const userSolutions = (state = defaultUserSolutions, action) => {
         items: [...state.items, ...action.solutions]
       });
     case ADD_SOLUTION:
+      return Object.assign({}, state, {
+        items: [...state.items, action.solution]
+      });
+    case SAVE_SOLUTION:
       return Object.assign({}, state, {
         items: [...state.items, action.solution]
       });
