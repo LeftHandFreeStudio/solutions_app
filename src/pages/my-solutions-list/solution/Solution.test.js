@@ -2,10 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Solution from './Solution';
 import { shallow } from 'enzyme';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-
-Enzyme.configure({ adapter: new Adapter() });
+import '../../../setupTests';
 
 describe('Solution', () => {
   let testSolution = {
@@ -28,12 +25,12 @@ describe('Solution', () => {
     ReactDOM.unmountComponentAtNode(div);
   });
 
-  it(' shows solution content ', () => {
+  it(' should show solution description ', () => {
     const wrapper = shallow(
       <Solution solution={defaultProps.solution} index={defaultProps.index} />
     );
-    const div = wrapper.find('div');
-    expect(div.children().length).toBe(3);
+    const description = wrapper.find('.description');
+    expect(description.length).toBe(1);
   });
 
   it(' increments received solution index by one ', () => {

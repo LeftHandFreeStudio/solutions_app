@@ -2,11 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import MySolutionsList from './MySolutionsList';
 import { shallow } from 'enzyme';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import Solution from './solution/Solution';
-
-Enzyme.configure({ adapter: new Adapter() });
+import '../../setupTests';
 
 describe('MySolutionsList', () => {
   const solution1 = {
