@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { postSolution } from '../../modules/solutionsActions';
 import { connect } from 'react-redux';
 
-class AddSolutionForm extends Component {
+export class AddSolutionForm extends Component {
   constructor(props) {
     super(props);
 
@@ -83,5 +83,4 @@ const mapStateToProps = function(state) {
     user: state.user
   };
 };
-
 export default connect(mapStateToProps)(AddSolutionForm);

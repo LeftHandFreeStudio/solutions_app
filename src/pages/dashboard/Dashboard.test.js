@@ -1,19 +1,26 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Dashboard from './Dashboard';
+import { Dashboard } from './Dashboard';
+import { MemoryRouter } from 'react-router-dom';
 import { shallow } from 'enzyme';
-import '../setupTests';
+import '../../setupTests';
+const routerWrappedComp = (
+  <MemoryRouter>
+    <Dashboard />
+  </MemoryRouter>
+);
+
+function setup() {
+  return shallow(routerWrappedComp);
+}
 
 describe('Dashboard', () => {
   beforeEach(() => {});
   it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<Dashboard />, div);
-    ReactDOM.unmountComponentAtNode(div);
+    setup();
   });
 
   it("should't show add solution button if not logged in ", () => {
-    const wrapper = shallow(<Dashboard />);
+    const wrapper = setup();
     const newSolutionButton = wrapper.find('.new-solution-button');
     expect(newSolutionButton.length).toBe(0);
   });

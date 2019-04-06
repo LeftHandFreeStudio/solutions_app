@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Solution from './Solution';
 import { shallow } from 'enzyme';
-import '../../setupTests';
+import '../../../setupTests';
 
 describe('Solution', () => {
   let testSolution = {
